@@ -1,0 +1,18 @@
+.firma-ara{
+    padding-bottom: 100px;
+    padding-top: 100px;
+}
+.form-arka-plan{
+    background-image: url("./assets/img/culinaria-afetiva-7.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+}
+.acik-renk-form{
+    background: rgba(255, 255, 255, 0.58);
+}
+.siyah-cerceve{
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}

@@ -1,0 +1,306 @@
+<div style="text-align: center;">
+  <app-titulo [titulo]="title"></app-titulo>
+</div>
+<hr />
+<div class="d-flex">
+  <div class="form-inline mr-auto">
+    <div class="form-group mb-2">
+      <label class="mr-2">Filtro:</label
+      ><input
+        type="text"
+        class="form-control-mr-2"
+        placeholder="buscar"
+        [(ngModel)]="filtroLista"
+      />
+    </div>
+  </div>
+
+  <div>
+    <button class="btn btn-outline-primary" (click)="novoRestaurante(template)">
+      <i class="fa fa-plus-circle"></i>&nbsp; Novo restaurante
+    </button>
+  </div>
+</div>
+
+<h3>Filtro: {{ filtroLista }}</h3>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        <button class="btn btn-outline-primary" (click)="alternarImagem()">
+          <i class="{{ mostrarImagem ? 'fa fa-eye-slash' : 'fa fa-eye' }}"></i>
+        </button>
+      </th>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Data Criação</th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="filteredRestaurants && filteredRestaurants.length">
+    <tr *ngFor="let res of filteredRestaurants">
+      <td>
+        <img
+          *ngIf="mostrarImagem"
+          src="http://localhost:5000/resources/images/{{ res.imageURL }}?_ts={{
+            dataAtual
+          }}"
+          [style.width.px]="imagemLargura"
+          [style.margin.px]="imagemMargem"
+        />
+      </td>
+      <td>{{ res.id }}</td>
+      <td>{{ res.description }}</td>
+      <td>{{ res.email | uppercase }}</td>
+      <td>{{ res.createDate | DateTimeFormatPipe }}</td>
+      
+      <td>
+        <div class="btn-group">
+          <button
+            class="btn btn-sm btn-success"
+            tooltip="Editar"
+            (click)="editarRestaurante(res, template)"
+          >
+            <i class="fa fa-edit"></i>
+          </button>
+          <button
+            class="btn btn-sm btn-danger"
+            tooltip="Excluir"
+            (click)="excluirRestaurante(res, confirm)"
+          >
+            <i class="fa fa-eraser"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <footer *ngIf="!filteredRestaurants || !filteredRestaurants.length">
+    <tr>
+      <td colspan="5" class="text-center"></td>
+      <h4>
+        Nenhum restaurante encontrado!
+      </h4>
+    </tr>
+  </footer>
+</table>
+
+<div
+  bsModal
+  #template="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name1"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">
+          Restaurante
+        </h4>
+        <button
+          type="button"
+          class="close pull-right"
+          (click)="template.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Nome</label>
+              <input
+                type="text"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('description').errors &&
+                    registerForm.get('description').touched
+                }"
+                formControlName="description"
+              />
+              <div
+                *ngIf="
+                  registerForm.get('description').hasError('required') &&
+                  registerForm.get('description').touched
+                "
+                class="invalid-feedback"
+              >
+                Nome é obrigatório!
+              </div>
+              <div
+                *ngIf="
+                  registerForm.get('description').hasError('minlength') &&
+                  registerForm.get('description').touched
+                "
+                class="invalid-feedback"
+              >
+                Nome deve ter no mínimo 4 caracteres!
+              </div>
+              <div
+                *ngIf="
+                  registerForm.get('description').hasError('maxlength') &&
+                  registerForm.get('description').touched
+                "
+                class="invalid-feedback"
+              >
+                Nome deve ter no máximo 100 caracteres!
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label>Email</label>
+              <input
+                type="text"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('email').errors &&
+                    registerForm.get('email').touched
+                }"
+                formControlName="email"
+              />
+              <div class="invalid-feedback">
+                Email é obrigatório!
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label>Imagem</label>
+              <table>
+                <tr>
+                  <td>
+                    <button class="btn btn-success" (click)="file.click()">
+                      Enviar Imagem
+                    </button>
+                    <input
+                      type="file"
+                      #file
+                      [ngClass]="{
+                        'is-invalid':
+                          registerForm.get('imageURL').errors &&
+                          registerForm.get('imageURL').touched
+                      }"
+                      (change)="onFileChange($event)"
+                      class="form-control is-invalid"
+                      formControlName="imageURL"
+                      placeholder=""
+                      style="display: none"
+                    />
+                  </td>
+                </tr>
+              </table>
+
+              <div
+                *ngIf="
+                  registerForm.get('imageURL').hasError('required') &&
+                  registerForm.get('imageURL').touched
+                "
+                class="invalid-feedback"
+              >
+                Imagem é obrigatório.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label>Endereço</label>
+              <input
+                type="text"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('addressDescription').errors &&
+                    registerForm.get('addressDescription').touched
+                }"
+                formControlName="addressDescription"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label>Cidade</label>
+              <select
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('cityId').errors &&
+                    registerForm.get('cityId').touched
+                }"
+                formControlName="cityId"
+              >
+                <!-- <option [ngValue]="null">selecione a cidade</option> -->
+                <option
+                  *ngFor="let c of filteredRestaurants"
+                  value="{{ c.id }}"
+                >
+                  {{ c.description }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex">
+        <button class="btn btn-secondary" (click)="template.hide()">
+          Fechar
+        </button>
+        <button
+          class="btn btn-primary ml-auto"
+          [disabled]="!registerForm.valid"
+          (click)="salvarAlteracao(template)"
+        >
+          Salvar Alterações
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  bsModal
+  #confirm="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name1"
+>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">
+          Deletando Evento
+        </h4>
+        <button
+          type="button"
+          class="close pull-right"
+          (click)="confirm.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{ bodyDeletarRestaurant }}</p>
+      </div>
+      <div class="modal-footer btn-group d-flex">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="confirm.hide()"
+        >
+          CENCELAR
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="confirmDelete(confirm)"
+        >
+          DELETAR
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

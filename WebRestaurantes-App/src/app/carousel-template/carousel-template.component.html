@@ -1,0 +1,169 @@
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<section class="search-banner text-white py-3 form-arka-plan" id="search-banner" >
+    <div class="container py-5 my-5">
+        <div class="row text-center pb-4">
+            <div class="col-md-12">
+                <h2 class="text-white siyah-cerceve">Pesquise o restaurante de sua preferência</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card acik-renk-form">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group ">                                 
+                                   
+                                    <input placeholder="Data da reserva" type="text" class="form-control " bsDatepicker>                                  
+                                  
+                                </div>
+                            </div>                         
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <select  id="ilceler" class="form-control" >
+                                        <option selected>Número de pessoas</option>
+                                        <option>1</option>
+                                        <option>2</option>                                        
+                                        <option>3</option>
+                                        <option>4</option>                                        
+                                        <option>5</option>
+                                        <option>6</option>                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <select id="arac-turu" class="form-control" >
+                                        <option selected>Horario</option>                                                                          
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group ">
+                                    <input type="text" class="form-control" placeholder="Cidade, bairro, endereço, nome do restaurante…">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-danger  pl-5 pr-5">Pesquisar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+</section>
+<section>        
+    <div class="album py-5 bg-light">
+        <div class="container">     
+          <div class="row" >      
+            <div class="col-md-4" *ngFor="let res of filteredRestaurants">
+              <div class="card mb-4 shadow-sm"> 
+                
+                <div class="card-img-block" style="height: 235px;">                   
+                  <img [routerLink]="['/restaurant', res.id, 'detail']" style="cursor: pointer; width:100%; height: 100%;" class="img-fluid" src="http://localhost:5000/resources/images/{{ res.imageURL }}?_ts={{
+                    dataAtual
+                  }}" >
+                    <!-- <carousel>
+                      <slide>
+                        <img style="cursor: pointer; width:100%; height: 100%;" class="img-fluid" src="http://localhost:5000/resources/images/{{ res.imageURL }}?_ts={{
+                          dataAtual
+                        }}" >
+                      </slide>
+                     </carousel> -->
+                </div>
+                <div class="card-body">
+                   
+                  <p class="card-text">{{ res.description }}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a [routerLink]="['/restaurant', res.id, 'detail']" tooltip="detalhe" class="btn btn-sm btn-outline-secondary">
+                        Detalhe
+                        </a>                      
+                      <button type="button" class="btn btn-sm btn-outline-secondary" (click)="template.show()" >Reservar Vaga</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>   
+            
+          </div>
+        </div>
+      </div>
+</section>
+
+<div bsModal #template="bs-modal"  class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Reservar Vaga</h4>
+        <button type="button" class="close pull-right"  (click)="template.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+          <form [formGroup]='registerForm'>             
+              <div class="col-md-12">
+                  <div class="form-group ">
+                      <select id="arac-turu" class="form-control" >
+                          <option selected>Horario</option>
+                          <option>18:00</option>
+                          <option>19:00</option>
+                          <option>20:00</option>                                        
+
+                      </select>
+                  </div>
+              </div>
+
+              <div class="col-md-12">
+                  <div class="form-group ">
+                      <select id="arac-turu" class="form-control" >
+                          <option selected>Qtd Pessoas</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                          <option>6 ou mais</option>
+
+                      </select>
+                  </div>
+              </div>              
+          
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label>Data agendamento</label>
+                  <input type="text" class="form-control" bsDatepicker [datesDisabled]="disabledDates"
+                  [ngClass]="{'is-invalid': registerForm.get('txtScheduleDate').errors 
+                                              && registerForm.get('txtScheduleDate').touched}"
+                  formControlName="txtScheduleDate">
+                  <div class="invalid-feedback">
+                      Data é obrigatória!
+                  </div>
+                </div>                 
+              </div>
+              
+          </form>
+      </div>
+      <div class="modal-footer d-flex">
+          <button class="btn btn-secondary" (click)="template.hide()">
+              Fechar
+            </button>
+            <button class="btn btn-primary ml-auto" [disabled]="!registerForm.valid" (click)="salvarAlteracao()">
+              Salvar Alterações
+            </button>
+      </div>
+    </div>
+  </div>
+</div>

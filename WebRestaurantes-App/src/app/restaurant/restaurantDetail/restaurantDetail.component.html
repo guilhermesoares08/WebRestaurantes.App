@@ -1,0 +1,51 @@
+<div class="row">
+    
+  <div class="col-md-8">
+    
+    <div class="card profile-card-2">
+      <div class="card-img-block">
+        <img
+          [src]="imagemURL"
+          class="img-fluid"
+          style="cursor: pointer;"
+          alt="Card image cap"
+        />
+      </div>
+      <div class="card-body pt-3">
+        <h4>{{restaurantObj.description}}</h4>
+        <p class="card-text">
+          <b>Local:</b> bla
+          <br />
+          <b>Data:</b> bla
+        </p>
+        <hr />
+        <p class="card-text">
+          <b>Contatos</b><br />
+          <small class="text-muted">Telefone: {{restaurantObj.phone | mask: '(000) 00000-0000'}}</small>
+          <br />
+          <small class="text-muted">e-mail: {{restaurantObj.email}}</small>
+        </p>
+        <p class="card-text">
+          Capacidade:
+          <small class="text-muted">bla</small>
+        </p>
+        <div class="row">
+          <div class="icon-block col-md-8 iconesSociais"></div>
+          <!--div class="col-md-4 d-flex justify-content-center">
+            <a href="#" class="btn btn-outline-primary">Participar</a>
+        </div-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="registerScheduleForm">
+    
+    <div class="form-row">
+      <div class=" col-md-12">
+        <label>Data agendamento</label>
+        <input formControlName="scheduleDate" bsDatepicker [bsValue]="bsInlineValue"/>
+        <pre *ngIf="registerScheduleForm.value.scheduleDate" class="code-preview">{{registerScheduleForm.value.scheduleDate | DateTimeFormatPipe}}</pre>
+      </div>                 
+    </div>
+  </form>
+</div>
