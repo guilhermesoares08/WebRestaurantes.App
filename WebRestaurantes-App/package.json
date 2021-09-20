@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +22,7 @@
     "@angular/router": "~8.2.13",
     "@auth0/angular-jwt": "^3.0.1",
     "bootswatch": "^4.4.1",
+    "express": "^4.17.1",
     "ngx-bootstrap": "^5.2.0",
     "ngx-mask": "^8.1.6",
     "ngx-toastr": "^11.2.1",
