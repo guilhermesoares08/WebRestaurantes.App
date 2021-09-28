@@ -7,6 +7,7 @@ import { RegistrationComponent } from './user/registration/registration.componen
 import { UserComponent } from './user/user.component';
 import { AuthGuard } from './auth/auth.guard';
 import { RestaurantDetailComponent } from './restaurant/restaurantDetail/restaurantDetail.component';
+import { PreRegisterRestaurantComponent } from './restaurant/pre-register-restaurant/pre-register-restaurant.component';
 
 
 const routes: Routes = [
@@ -17,8 +18,9 @@ const routes: Routes = [
       { path: 'registration', component: RegistrationComponent }
     ]
   },
-  { path: 'restaurants', component: RestaurantComponent, canActivate: [AuthGuard] },
+  { path: 'restaurants', pathMatch: 'full', component: RestaurantComponent, canActivate: [AuthGuard] },
   { path: 'restaurant/:id/detail', component: RestaurantDetailComponent},
+  { path: 'restaurant/pre-register-restaurant', component: PreRegisterRestaurantComponent},
   { path: '',  component: CarouselTemplateComponent },
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: '**',  redirectTo: '', pathMatch: 'full' }

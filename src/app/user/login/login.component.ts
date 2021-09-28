@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
           this.toastr.success('Logado com Sucesso');
         },
         error => {
-          this.toastr.error('Falha ao tentar Logar');
+          this.toastr.error(error.error);
         }
       );
   }

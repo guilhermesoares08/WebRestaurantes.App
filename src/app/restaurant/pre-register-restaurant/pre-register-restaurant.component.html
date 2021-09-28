@@ -1,0 +1,70 @@
+<form [formGroup]="registerRestaurantForm">
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <Label>Nome do restaurante</Label>
+      <input type="text" 
+      [ngClass]="{'is-invalid': registerRestaurantForm.get('txtRestaurantName').errors
+                              && registerRestaurantForm.get('txtRestaurantName').touched}"
+        class="form-control" formControlName="txtRestaurantName">
+      <div *ngIf="registerRestaurantForm.get('txtRestaurantName').hasError('required')" class="invalid-feedback">
+        O nome é obrigatório
+      </div>
+      <div *ngIf="registerRestaurantForm.get('txtRestaurantName').hasError('minlength')
+                  &&  registerRestaurantForm.get('txtRestaurantName').touched" class="invalid-feedback">
+        Nome deve ter no mínimo 4 caracteres
+      </div>
+      <div *ngIf="registerRestaurantForm.get('txtRestaurantName').hasError('maxlength')
+                  &&  registerRestaurantForm.get('txtRestaurantName').touched" class="invalid-feedback">
+        Nome deve ter no máximo 50 caracteres
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <Label>Descrição</Label>      
+      <textarea type="text" class="form-control" formControlName="txtAreaRestaurant"></textarea>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <Label>Email</Label>      
+      <input type="text"
+        [ngClass]="{'is-invalid': registerRestaurantForm.get('txtEmailRestaurant').errors 
+                                  && registerRestaurantForm.get('txtEmailRestaurant').touched}" 
+        class="form-control" formControlName="txtEmailRestaurant">
+
+      <div *ngIf="registerRestaurantForm.get('txtEmailRestaurant').hasError('required')" class="invalid-feedback">
+        O e-mail é obrigatório
+      </div>
+      <div *ngIf="registerRestaurantForm.get('txtEmailRestaurant').hasError('email')
+                  &&  registerRestaurantForm.get('txtEmailRestaurant').touched" class="invalid-feedback">
+        Deve ser um e-mail válido
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <Label>Hora Abertura</Label>      
+      <input type="text" class="form-control" formControlName="txtOpeningTime">
+    </div>
+    
+    <div class="form-group col-md-6">
+      <Label>Hora Fechamento</Label>      
+      <input type="text" class="form-control" formControlName="txtClosingTime">
+    </div>
+  </div>
+
+  <div class="form-row">
+    
+  </div>
+</form>
+<br>
+<button class="btn btn-primary" [disabled]="!registerRestaurantForm.valid" >
+  Salvar
+</button>
+
+<p>Form Value: {{registerRestaurantForm.value | json}}</p>
+<p>Form Status: {{registerRestaurantForm.status | json}}</p>

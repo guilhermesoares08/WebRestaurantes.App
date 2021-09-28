@@ -121,11 +121,21 @@
                           <option selected>Horario</option>
                           <option>18:00</option>
                           <option>19:00</option>
-                          <option>20:00</option>                                        
-
+                          <option>20:00</option>
                       </select>
                   </div>
               </div>
+
+              <div class="col-md-12">
+                <div class="form-group ">
+                  <select name="selectmake" class="form-control">
+                    <option selected>Restaurante</option>
+                    <option *ngFor="let muscleCar of filteredRestaurants" [ngValue]="muscleCar">{{muscleCar.description}}</option>
+                </select>
+                </div>
+              </div>             
+
+            
 
               <div class="col-md-12">
                   <div class="form-group ">

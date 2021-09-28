@@ -31,6 +31,7 @@ import { RegistrationComponent } from './user/registration/registration.componen
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { RestaurantDetailComponent } from './restaurant/restaurantDetail/restaurantDetail.component';
+import { PreRegisterRestaurantComponent } from './restaurant/pre-register-restaurant/pre-register-restaurant.component';
 
 
 
@@ -46,7 +47,8 @@ import { RestaurantDetailComponent } from './restaurant/restaurantDetail/restaur
       UserComponent,
       LoginComponent,
       RegistrationComponent,
-      RestaurantDetailComponent
+      RestaurantDetailComponent,
+      PreRegisterRestaurantComponent
    ],
    imports: [
       BrowserModule,

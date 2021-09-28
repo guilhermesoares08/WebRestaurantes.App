@@ -1,5 +1,6 @@
 import { Image } from './Image';
 import { RestaurantAddress } from './RestaurantAddress';
+import { RestaurantOpeningHour } from './RestaurantOpeningHour';
 
 export class Restaurant {
   id: number;
@@ -14,4 +15,5 @@ export class Restaurant {
   imageURL: string;
   phone: string;
   addresses: RestaurantAddress[];
+  openingHour: RestaurantOpeningHour;
 }
